@@ -1,0 +1,57 @@
+The Path to Go 1.1
+language, tools, and performance
+19:00 28 Mar 2013
+Tags: go1.1, go
+
+Jesse Szwedko
+Software Engineer, ModCloth
+j.szwedko@modcloth.com
+@jesse_szwedko
+
+Sheena McCoy
+Software Engineer, ModCloth
+sp.mccoy@modcloth.com
+@sheenapmccoy
+
+* Method Value
+.play methods.go /START OMIT/,/END OMIT/
+
+* Select Go 1
+.play pre-select.go /START OMIT/,/END OMIT/
+
+* Select Go 1.1
+.play post-select.go /START OMIT/,/END OMIT/
+
+* Reflect
+.play reflect.go /START OMIT/,/END OMIT/
+
+* Return Requirements
+.play returns.go
+
+* Other Language Changes
+- Integer division by zero
+- Surrogates in Unicode literals
+
+* Backwards Incompatible Changes
+
+* Implemtation and Tool Changes
+- Command-line flag parsing
+- Size of int on 64-bit platforms
+- Unicode
+- The gc assemblers
+- Changes to the go command
+- Changes to the go test command
+- Changes to the go fix command
+
+* Performance
+Typical improvements relative to Go 1.0 seem to be about 30%-40%
+- The gc compilers generate better code in many cases, most noticeably for floating point on the 32-bit Intel architecture.
+- The gc compilers do more in-lining, including for some operations in the run-time such as append and interface conversions.
+- There is a new implementation of Go maps with significant reduction in memory footprint and CPU time.
+- The garbage collector has been made more parallel, which can reduce latencies for programs running on multiple CPUs.
+- The garbage collector is also more precise, which costs a small amount of CPU time but can reduce the size of the heap significantly, especially on 32-bit architectures.
+- Due to tighter coupling of the run-time and network libraries, fewer context switches are required on network operations.
+
+* Current State of 1.1 Release
+.link http://blog.golang.org/2013/03/the-path-to-go-1.html "in the coming weeks."
+.iframe http://swtch.com/~rsc/go11.html 400 1000
