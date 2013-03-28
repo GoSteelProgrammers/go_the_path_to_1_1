@@ -43,6 +43,18 @@ You can use `go vet` to find unreachable code
 - [[http://tip.golang.org/doc/go1.1][Many]]
 
 * reflect.MakeFunc
+    func MakeFunc(typ Type, fn func(args []Value) (results []Value)) Value
+
+Execution of generated function
+- converts its arguments to a list of Values args.
+- runs results := fn(args).
+- returns the results as a slice of Values, one per formal result.
+
+Allows for implementation of pseudo-generic functions. Could use to generate
+generic data structures (collection of functions with struct as first
+parameter).
+
+* reflect.MakeFunc
 .play reflect.go /START OMIT/,/END OMIT/
 
 * reflect.Select
