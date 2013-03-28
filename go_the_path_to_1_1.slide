@@ -39,12 +39,9 @@ Previously this would require wrapping in an anonymous function.
 * Return Requirements
 Functions ending in [[http://tip.golang.org/ref/spec#Terminating_statements][terminating statements]] no longer require a panic() or return
 
-.code returns.go /START OMIT/,/END OMIT/
+.play returns.go /START OMIT/,/END OMIT/
 
 You can use `go vet` to find unreachable code
-
-* Standard library changes
-- [[http://tip.golang.org/doc/go1.1][Many]]
 
 * reflect.MakeFunc
     func MakeFunc(typ Type, fn func(args []Value) (results []Value)) Value
@@ -54,14 +51,13 @@ Execution of generated function
 - runs results := fn(args).
 - returns the results as a slice of Values, one per formal result.
 
-Allows for implementation of pseudo-generic functions. Could use to generate
-generic data structures (collection of functions with struct as first
-parameter).
+Allows for implementation of pseudo-generic functions.
 
 * reflect.MakeFunc
 .play reflect.go /START OMIT/,/END OMIT/
 
 * reflect.Select
+Allows for dymanic generation of [[http://golang.org/ref/spec#Select_statements][select]] statements
 
     const (
             _               SelectDir = iota
@@ -91,6 +87,9 @@ Maybe someday.
 
 [[http://www.youtube.com/watch?v=hB05UFqOtFA][CSP in Newsqueak]]
 
+* 
+.iframe http://tip.golang.org/doc/go1.1#minor_library_changes 600 1000
+
 * Backwards "Incompatible" Changes
 - Ints are now 64-bit on 64-bit platforms
 - UTF-16 surrogate half values are correctly considered illegal
@@ -98,26 +97,36 @@ Maybe someday.
 - Division by constant 0 is a compile-time error instead of runtime
 - [[http://golang.org/pkg/net/][net]] package structs now have a Zone field which breaks untagged struct literals (use go fix)
 - [[http://golang.org/pkg/time/][time]] package now returns nanosecond precision
+- GC tool chain now uses same command-line flag parsing rules as [[http://golang.org/pkg/flag/][flag]] package
 - [[http://golang.org/doc/go1compat.html][Go Compatibility]] 
 
-* Implemtation and Tool Changes
-- Command-line flag parsing
-- Size of int on 64-bit platforms
-- Unicode
-- The gc assemblers
-- Changes to the go command
-- Changes to the go test command
-- Changes to the go fix command
+* Other Implementation and Tool Changes
+go build
+
+- Has more detailed error messages
+
+go get
+
+- $GOPATH requirement
+- $GOPATH != $GOROOT
+
+go test
+
+- Leaves binaries while profiling
+- Can generate profiling information about when/where go routines are blocked with -blockprofile
+
+go fix
+
+- Only updates 1.0 -> 1.1 code. Use go 1.0 tool chain to update pre-1.0 -> 1.0
 
 * Performance
 Typical improvements relative to Go 1.0 seem to be about 30%-40%
-- The gc compilers generate better code in many cases, most noticeably for floating point on the 32-bit Intel architecture.
-- The gc compilers do more in-lining, including for some operations in the run-time such as append and interface conversions.
-- There is a new implementation of Go maps with significant reduction in memory footprint and CPU time.
-- The garbage collector has been made more parallel, which can reduce latencies for programs running on multiple CPUs.
-- The garbage collector is also more precise, which costs a small amount of CPU time but can reduce the size of the heap significantly, especially on 32-bit architectures.
-- Due to tighter coupling of the run-time and network libraries, fewer context switches are required on network operations.
+
+- gc compiler improvements including more in-lining (including append and interface conversions)
+- Re-implementation of Go maps as hashtable with buckets
+- Garbage collector is more precise at the expense of CPU, but also more parallel
+- Improved network performance due to tighter coupling of run-time and network libraries (fewer context switches)
 
 * Current State of 1.1 Release
 .link http://blog.golang.org/2013/03/the-path-to-go-1.html "in the coming weeks."
-.iframe http://swtch.com/~rsc/go11.html 400 1000
+.iframe http://swtch.com/~rsc/go11.html 500 1000
