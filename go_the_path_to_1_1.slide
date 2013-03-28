@@ -16,17 +16,20 @@ sp.mccoy@modcloth.com
 * Method Value
 .play methods.go /START OMIT/,/END OMIT/
 
-* Select Go 1
-.play pre-select.go /START OMIT/,/END OMIT/
-
-* Select Go 1.1
-.play post-select.go /START OMIT/,/END OMIT/
-
-* Reflect
-.play reflect.go /START OMIT/,/END OMIT/
-
 * Return Requirements
 .play returns.go
+
+* Standard library changes
+- [[http://tip.golang.org/doc/go1.1][Many]]
+
+* reflect.MakeFunc
+.play reflect.go /START OMIT/,/END OMIT/
+
+* Muxing Select Go 1
+.play pre-select.go /START OMIT/,/END OMIT/
+
+* Muxing Select Go 1.1 (reflect.Select)
+.play post-select.go /START OMIT/,/END OMIT/
 
 * Other Language Changes
 - Integer division by zero
