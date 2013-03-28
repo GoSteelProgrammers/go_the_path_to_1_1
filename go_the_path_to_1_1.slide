@@ -14,6 +14,22 @@ sp.mccoy@modcloth.com
 @sheenapmccoy
 
 * Method Value
+- Functions that have been bound to a specific receiver value
+
+    var w bufio.Writer
+    f := w.Write //func(p []byte) (n int, err error) with implicit receiver
+    n, err := f([]byte{1,2,3}) //writes the byte array to w
+
+- Not to be confused with method expressions
+    var w bufio.Writer
+    f := (*bufio.Writer).Write  //func (w *bufio.Writer, p []byte) (n int, err error)
+    n, err := f(w, []byte{1,2,3}) //writes the byte array to w
+
+Useful for passing struct methods to APIs requiring a callback (e.g.
+[[http://golang.org/pkg/net/http/#ServeMux.ServeHTTP][`http.ServeMux#ServeHTTP`]]).
+Previously this would require wrapping in an anonymous function.
+
+* Method Value
 .play methods.go /START OMIT/,/END OMIT/
 
 * Return Requirements
