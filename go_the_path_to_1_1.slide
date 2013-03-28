@@ -31,6 +31,13 @@ sp.mccoy@modcloth.com
 * Muxing Select Go 1.1 (reflect.Select)
 .play post-select.go /START OMIT/,/END OMIT/
 
+* Muxing in Newsqueak
+.code newsqueak-select.ns
+
+Maybe someday.
+
+[[http://www.youtube.com/watch?v=hB05UFqOtFA][CSP in Newsqueak]]
+
 * Other Language Changes
 - Integer division by zero
 - Surrogates in Unicode literals

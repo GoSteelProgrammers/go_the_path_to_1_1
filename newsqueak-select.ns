@@ -1,0 +1,8 @@
+a: array[N] of chan of int = mk();
+i, j: int;
+select {
+    case <-a[]:         print("any");
+    case i = <-a[]:     print("A", i);
+    case <-a[i=]:       print("B", i);
+    case i = <-a[j=]:   print("C", i, j);
+}
