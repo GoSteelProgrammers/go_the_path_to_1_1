@@ -13,6 +13,16 @@ Software Engineer, ModCloth
 sp.mccoy@modcloth.com
 @sheenapmccoy
 
+* The Path to Go 1.1
+
+- Language Changes
+- Standard Library Changes
+- Tool Chain Changes
+- Backwards "Incompatible" Changes
+- Performance
+
+* Language Changes
+
 * Method Value
 Functions that have been bound to a specific receiver value
 
@@ -43,10 +53,28 @@ Functions ending in [[http://tip.golang.org/ref/spec#Terminating_statements][ter
 
 You can use `go vet` to find unreachable code
 
+* Other Language Changes
+
+Integer division by zero
+
+- Now a compile time error
+
+.play zero.go /START OMIT/,/END OMIT/
+
+Surrogate halves in Unicode (UTF-16) literals
+
+- Unicode constants with half surrogates are compile time errors
+- When encoded as UTF-8 bytes, results in uft8.RuneError when decoding characters
+
+.play surrogates.go /START OMIT/,/END OMIT/
+
+* Standard Library Changes
+
 * reflect.MakeFunc
     func MakeFunc(typ Type, fn func(args []Value) (results []Value)) Value
 
 Execution of generated function
+
 - converts its arguments to a list of Values args.
 - runs results := fn(args).
 - returns the results as a slice of Values, one per formal result.
@@ -90,17 +118,7 @@ Maybe someday.
 * 
 .iframe http://tip.golang.org/doc/go1.1#minor_library_changes 600 1000
 
-* Backwards "Incompatible" Changes
-- Ints are now 64-bit on 64-bit platforms
-- UTF-16 surrogate half values are correctly considered illegal
-- Assembly functions need to be revised to adjust frame pointer offsets (use go vet)
-- Division by constant 0 is a compile-time error instead of runtime
-- [[http://golang.org/pkg/net/][net]] package structs now have a Zone field which breaks untagged struct literals (use go fix)
-- [[http://golang.org/pkg/time/][time]] package now returns nanosecond precision
-- GC tool chain now uses same command-line flag parsing rules as [[http://golang.org/pkg/flag/][flag]] package
-- [[http://golang.org/doc/go1compat.html][Go Compatibility]] 
-
-* Other Implementation and Tool Changes
+* Tool Chain Changes
 go build
 
 - Has more detailed error messages
@@ -118,6 +136,16 @@ go test
 go fix
 
 - Only updates 1.0 -> 1.1 code. Use go 1.0 tool chain to update pre-1.0 -> 1.0
+
+* Backwards "Incompatible" Changes
+- Ints are now 64-bit on 64-bit platforms
+- UTF-16 surrogate half values are correctly considered illegal
+- Assembly functions need to be revised to adjust frame pointer offsets (use go vet)
+- Division by constant 0 is a compile-time error instead of runtime
+- [[http://golang.org/pkg/net/][net]] package structs now have a Zone field which breaks untagged struct literals (use go fix)
+- [[http://golang.org/pkg/time/][time]] package now returns nanosecond precision
+- GC tool chain now uses same command-line flag parsing rules as [[http://golang.org/pkg/flag/][flag]] package
+- [[http://golang.org/doc/go1compat.html][Go Compatibility]] 
 
 * Performance
 Typical improvements relative to Go 1.0 seem to be about 30%-40%
