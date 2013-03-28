@@ -32,7 +32,14 @@ sp.mccoy@modcloth.com
 - Integer division by zero
 - Surrogates in Unicode literals
 
-* Backwards Incompatible Changes
+* Backwards "Incompatible" Changes
+- Ints are now 64-bit on 64-bit platforms
+- UTF-16 surrogate half values are correctly considered illegal
+- Assembly functions need to be revised to adjust frame pointer offsets (use go vet)
+- Division by constant 0 is a compile-time error instead of runtime
+- [[http://golang.org/pkg/net/][net]] package structs now have a Zone field which breaks untagged struct literals (use go fix)
+- [[http://golang.org/pkg/time/][time]] package now returns nanosecond precision
+- [[http://golang.org/doc/go1compat.html][Go Compatibility]] 
 
 * Implemtation and Tool Changes
 - Command-line flag parsing
