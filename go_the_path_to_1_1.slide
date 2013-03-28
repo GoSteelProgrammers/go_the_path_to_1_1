@@ -17,7 +17,8 @@ sp.mccoy@modcloth.com
 .play methods.go /START OMIT/,/END OMIT/
 
 * Return Requirements
-.play returns.go
+- Functions ending in [[http://tip.golang.org/ref/spec#Terminating_statements][terminating statements]] no longer require a panic() or return
+.code returns.go /START OMIT/,/END OMIT/
 
 * Standard library changes
 - [[http://tip.golang.org/doc/go1.1][Many]]
