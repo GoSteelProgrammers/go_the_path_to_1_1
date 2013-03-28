@@ -87,10 +87,6 @@ Maybe someday.
 
 [[http://www.youtube.com/watch?v=hB05UFqOtFA][CSP in Newsqueak]]
 
-* Other Language Changes
-- Integer division by zero
-- Surrogates in Unicode literals
-
 * Backwards "Incompatible" Changes
 - Ints are now 64-bit on 64-bit platforms
 - UTF-16 surrogate half values are correctly considered illegal
