@@ -25,6 +25,23 @@ sp.mccoy@modcloth.com
 * reflect.MakeFunc
 .play reflect.go /START OMIT/,/END OMIT/
 
+* reflect.Select
+
+    const (
+            _               SelectDir = iota
+            SelectSend              // case Chan <- Send
+            SelectRecv              // case <-Chan:
+            SelectDefault           // default
+    )
+
+    type SelectCase struct {
+        Dir  SelectDir // direction of case
+        Chan Value     // channel to use (for send or receive)
+        Send Value     // value to send (for send)
+    }
+
+    func Select(cases []SelectCase) (chosen int, recv Value, recvOK bool)
+
 * Muxing Select Go 1
 .play pre-select.go /START OMIT/,/END OMIT/
 

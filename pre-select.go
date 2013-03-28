@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
-	"reflect"
+	"math/rand"
+	"sync"
+	"time"
 )
 
 type Output struct {
@@ -10,49 +12,45 @@ type Output struct {
 	Payload int
 }
 
-//START OMIT
-
-//TODO Replace done chan with waitgroup
-func receive_1(inputs []chan int) <-chan *Output {
-	doneChan := make(chan int)
+func receive(inputs []chan int) <-chan *Output {
+	//START OMIT
+	var wg sync.WaitGroup
 	output := make(chan *Output)
 
-	go func(numChan int) {
-		defer close(output)
-		for i := numChan; i > 0; i-- {
-			<-doneChan
-		}
-	}(len(inputs))
-
 	for i, input := range inputs {
-		go func(index int) {
+		wg.Add(1)
+		go func(index int, input chan int) {
 		L:
 			for {
 				select {
 				case payload, ok := <-input:
 					if !ok {
-						doneChan <- 1
+						wg.Done()
 						break L
 					}
 					output <- &Output{Index: index, Payload: payload}
 				}
 			}
-		}(i)
+		}(i, input)
 	}
+	go func(numChan int) {
+		defer close(output)
+		wg.Wait()
+	}(len(inputs))
+	//END OMIT
 
 	return output
 }
 
-//END OMIT
-
 func getChannels() []chan int {
-	inputs := make([]chan int, 1000)
+	inputs := make([]chan int, 10)
 	for i := 0; i < len(inputs); i++ {
 		input := make(chan int)
 		go func() {
 			defer close(input)
-			for j := 0; j < 1000; j++ {
+			for j := 0; j < 10; j++ {
 				input <- j
+				time.Sleep(time.Duration(rand.Intn(1000)) * time.Millisecond)
 			}
 		}()
 		inputs[i] = input
@@ -74,6 +72,6 @@ L:
 }
 
 func main() {
-	fmt.Println("Go 1.0:")
-	printOutput(receive_1(getChannels()))
+	rand.Seed(time.Now().Unix())
+	printOutput(receive(getChannels()))
 }
