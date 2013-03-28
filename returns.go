@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-	"reflect"
 )
 
 //START OMIT
