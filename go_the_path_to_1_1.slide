@@ -1,5 +1,5 @@
 The Path to Go 1.1
-language, tools, and performance
+language, stdlib, tools, and performance
 19:00 28 Mar 2013
 Tags: go1.1, go
 
@@ -24,17 +24,12 @@ sp.mccoy@modcloth.com
 * Language Changes
 
 * Method Value
+
 Functions that have been bound to a specific receiver value
 
-    var w bufio.Writer
-    f := w.Write //func(p []byte) (n int, err error) with implicit receiver
-    n, err := f([]byte{1,2,3}) //writes the byte array to w
+	func (w io.Writer) Write(p []byte) (n int, err error)
 
-Not to be confused with method expressions
-
-    var w bufio.Writer
-    f := (*bufio.Writer).Write  //func (w *bufio.Writer, p []byte) (n int, err error)
-    n, err := f(w, []byte{1,2,3}) //writes the byte array to w
+.play methods_simple.go /START OMIT/,/END OMIT/
 
 Useful for passing struct methods to APIs requiring a callback.
 E.g. http.ServeMux.ServeHTTP
@@ -85,7 +80,7 @@ Allows for implementation of pseudo-generic functions.
 .play reflect.go /START OMIT/,/END OMIT/
 
 * reflect.Select
-Allows for dymanic generation of [[http://golang.org/ref/spec#Select_statements][select]] statements
+Allows for dymanic generation of [[http://tour.golang.org/#66][select]] statements
 
     const (
             _               SelectDir = iota
@@ -121,7 +116,7 @@ Maybe someday.
 * Tool Chain Changes
 go build
 
-- Has more detailed error messages
+- Has more detailed error messages, including paths searched for missing packages
 
 go get
 
