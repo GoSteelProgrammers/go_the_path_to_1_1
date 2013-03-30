@@ -66,6 +66,9 @@ Surrogate halves in Unicode (UTF-16) literals
 * Standard Library Changes
 
 * reflect.MakeFunc
+
+Allows for implementation of pseudo-generic functions with type safety with respect to the user application.
+
     func MakeFunc(typ Type, fn func(args []Value) (results []Value)) Value
 
 Execution of generated function
@@ -74,13 +77,11 @@ Execution of generated function
 - runs results := fn(args).
 - returns the results as a slice of Values, one per formal result.
 
-Allows for implementation of pseudo-generic functions.
-
 * reflect.MakeFunc
 .play reflect.go /START OMIT/,/END OMIT/
 
 * reflect.Select
-Allows for dymanic generation of [[http://tour.golang.org/#66][select]] statements
+Allows for dymanic generation of [[http://tour.golang.org/#62][select]] statements
 
     const (
             _               SelectDir = iota

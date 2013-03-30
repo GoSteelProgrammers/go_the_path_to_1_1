@@ -22,7 +22,6 @@ func (me *RotN) rot(r rune) rune {
 }
 
 func main() {
-	8 / (5 * 0)
 	foo := &RotN{Rotation: 1}
 	fmt.Println(strings.Map(foo.rot, "'Twas brillig and the slithy gopher...")) // HL
 }
